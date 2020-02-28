@@ -3,7 +3,7 @@ Welcome to a Spago project!
 You can edit this file as you like.
 -}
 { name = "hooks-at-a-glance"
-, dependencies = [ "console", "effect", "psci-support", "reactix" ]
+, dependencies = [ "console", "effect", "ffi-simple", "psci-support", "reactix" ]
 , packages = ./packages.dhall
 , sources = [ "src/**/*.purs", "test/**/*.purs" ]
 }

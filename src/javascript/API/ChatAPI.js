@@ -1,12 +1,10 @@
-const ChatAPI = {
-  subscribeToFriendStatus(id, handleStatusChange) {
-    console.log("subscribed");
-    var status = { isOnline: true };
-    handleStatusChange(status);
-  },
-  unsubscribeFromFriendStatus(id, handleStatusChange) {
-    console.log("unsubscribed");
-  }
+exports.subscribeToFriendStatus = function(id, handleStatusChange) {
+  console.log("subscribed");
+  var status = { isOnline: true };
+  console.log(handleStatusChange);
+  handleStatusChange(status);
 };
 
-export default ChatAPI;
+exports.unsubscribeFromFriendStatus = function(id) {
+  console.log("unsubscribed");
+};
