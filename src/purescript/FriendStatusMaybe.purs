@@ -1,4 +1,4 @@
-module FriendStatus where
+module FriendStatusMaybe where
 
 import Prelude
 
@@ -14,14 +14,14 @@ import Reactix.React (Element)
 type Props = ( friend :: { id :: Int } )
 
 friendStatusCpt :: R.Component Props
-friendStatusCpt = R.hooksComponent "FriendStatus" cpt
+friendStatusCpt = R.hooksComponent "FriendStatusMaybe" cpt
   where
     cpt { friend } _ = do
       isOnline /\ setIsOnline <- R.useState' Nothing
 
-      R.useEffect $ do
+      R.useEffectOnce $ do
         let callback status = unsafePerformEffect $ setIsOnline $ const $ Just status.isOnline
-        pure $ subscribeToFriendStatus friend.id callback
+        pure $ subscribeToFriendStatus friend.id $ callback
         pure $ mempty
 
       pure $ H.div {} [ H.text (showOnline isOnline) ]

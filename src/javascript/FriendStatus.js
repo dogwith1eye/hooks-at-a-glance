@@ -13,7 +13,7 @@ function FriendStatus(props) {
     return () => {
       ChatAPI.unsubscribeFromFriendStatus(props.friend.id);
     };
-  });
+  }, [props.friend.id]);
 
   if (isOnline === null) {
     return "Loading...";

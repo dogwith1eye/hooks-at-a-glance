@@ -1,8 +1,13 @@
 exports.subscribeToFriendStatus = function(id, handleStatusChange) {
   console.log("subscribed");
-  var status = { isOnline: true };
-  console.log(handleStatusChange);
-  handleStatusChange(status);
+  var online = { isOnline: true };
+  console.log("online");
+  handleStatusChange(online);
+  setTimeout(function() {
+    var offline = { isOffline: true };
+    console.log("offline");
+    handleStatusChange(offline);
+  }, 2000);
 };
 
 exports.unsubscribeFromFriendStatus = function(id) {

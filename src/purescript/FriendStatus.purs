@@ -3,9 +3,7 @@ module FriendStatus where
 import Prelude
 
 import ChatAPI (subscribeToFriendStatus, unsubscribeFromFriendStatus)
-import Data.Maybe (Maybe(..))
 import Data.Tuple.Nested ((/\))
-import Effect.Console (logShow)
 import Effect.Unsafe (unsafePerformEffect)
 import Reactix as R
 import Reactix.DOM.HTML as H
@@ -19,10 +17,11 @@ friendStatusCpt = R.hooksComponent "FriendStatus" cpt
     cpt { friend } _ = do
       isOnline /\ setIsOnline <- R.useState' false
 
-      R.useEffect $ do
+      R.useEffect1 friend.id $ do
         let callback status = unsafePerformEffect $ setIsOnline $ const $ status.isOnline
         pure $ subscribeToFriendStatus friend.id callback
-        pure $ mempty
+        pure $ R.nothing
+        --pure $ (\_ -> unsubscribeFromFriendStatus friend.id)
 
       pure $ H.div {} [ H.text (if isOnline then "Online" else "Offline") ]
 
