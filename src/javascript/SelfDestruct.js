@@ -1,23 +1,24 @@
 import React from "react";
 
-function useExpiration(expirationDate) {
+function useExpiration(milliseconds) {
   const [shouldRender, setShouldRender] = React.useState(true);
   React.useEffect(() => {
     const timeoutId = setTimeout(() => {
       setShouldRender(false);
-    }, expirationDate - Date.now());
+    }, milliseconds);
 
     return () => clearTimeout(timeoutId);
-  }, [expirationDate]);
+  }, [milliseconds]);
   return shouldRender;
 }
 
-function useExpirationUI(expirationDate, renderableThing) {
-  return useExpiration(expirationDate) ? renderableThing : null;
+function useExpirationUI(milliseconds, renderableThing) {
+  return useExpiration(milliseconds) ? renderableThing : null;
 }
 
-function SelfDestruct({ expirationDate, children }) {
-  return useExpirationUI(expirationDate, children);
+function SelfDestruct({ milliseconds, children }) {
+  console.log(children);
+  return useExpirationUI(milliseconds, children);
 }
 
 export default SelfDestruct;

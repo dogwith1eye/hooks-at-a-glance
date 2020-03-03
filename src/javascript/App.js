@@ -11,7 +11,7 @@ function App() {
       <h1>My App</h1>
       <Counter />
       <CounterEffect />
-      <SelfDestruct expirationDate={new Date(Date.now() + 5000)}>
+      <SelfDestruct milliseconds={5000}>
         <FriendStatus {...friend} />
       </SelfDestruct>
     </div>
