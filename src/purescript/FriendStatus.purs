@@ -5,6 +5,7 @@ import Prelude
 import ChatAPI (subscribeToFriendStatus, unsubscribeFromFriendStatus)
 import Data.Tuple.Nested ((/\))
 import Effect.Unsafe (unsafePerformEffect)
+import FFI.Simple (delay)
 import Reactix as R
 import Reactix.DOM.HTML as H
 import Reactix.React (Element)
@@ -20,8 +21,7 @@ friendStatusCpt = R.hooksComponent "FriendStatus" cpt
       R.useEffect1 friend.id $ do
         let callback status = unsafePerformEffect $ setIsOnline $ const $ status.isOnline
         pure $ subscribeToFriendStatus friend.id callback
-        pure $ R.nothing
-        --pure $ (\_ -> unsubscribeFromFriendStatus friend.id)
+        pure $ delay unit $ \_ -> unsubscribeFromFriendStatus friend.id
 
       pure $ H.div {} [ H.text (if isOnline then "Online" else "Offline") ]
 
