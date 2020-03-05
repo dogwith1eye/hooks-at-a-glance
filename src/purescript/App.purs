@@ -3,6 +3,7 @@ module App where
 import Counter (counter)
 import CounterEffect (counterEffect)
 import FriendStatus (friendStatus)
+import SelfDestruct (selfDestruct)
 import Reactix.DOM.HTML as H
 import Reactix.React (Element)
 
@@ -14,5 +15,5 @@ app {} =
     [ H.h1 {} [ H.text "My App" ]
     , counter {}
     , counterEffect {}
-    , friendStatus { friend: { id: 1 } }
+    , selfDestruct { milliseconds:5000 } [ friendStatus { friend: { id: 1 } } ]
     ]

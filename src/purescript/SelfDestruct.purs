@@ -6,9 +6,10 @@ import Data.Tuple.Nested ((/\))
 import Effect.Timer as T
 import FFI.Simple (delay)
 import Reactix as R
+import Reactix.DOM.HTML as H
 import Reactix.React (Element)
 
-type Props = ( milliseconds :: Int, children :: Array Element )
+type Props = ( milliseconds :: Int )
 
 useExpiration :: Int -> R.Hooks Boolean
 useExpiration milliseconds = do
@@ -19,7 +20,7 @@ useExpiration milliseconds = do
     pure $ delay unit $ \_ -> T.clearTimeout timeoutId
   pure $ shouldRender
 
-useExpirationUI :: Int -> (Array Element) -> R.Hooks (Array Element)
+useExpirationUI :: Int -> Array Element -> R.Hooks (Array Element)
 useExpirationUI milliseconds renderableThings = do
   shouldRender <- useExpiration milliseconds
   pure $ if shouldRender then renderableThings else []
@@ -29,7 +30,7 @@ selfDestructCpt = R.hooksComponent "SelfDestruct" cpt
   where
     cpt { milliseconds } children = do
       expires <- useExpirationUI milliseconds children
-      pure $ expires
+      pure $ H.div {} expires
 
-selfDestruct :: Record Props -> Element
-selfDestruct props = R.createElement selfDestructCpt props []
+selfDestruct :: Record Props -> Array Element -> Element
+selfDestruct props children = R.createElement selfDestructCpt props children
